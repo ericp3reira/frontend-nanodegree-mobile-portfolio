@@ -6,6 +6,7 @@
     <meta name="description" content=" FILL ME IN ">
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
+    <!-- Inline style.css -->
     <style>
       html {
         font-size: 100%;
@@ -51,6 +52,7 @@
       }
       footer span { float: right; font-style: italic; }
     </style>
+    <!-- Download these only if required -->
     <link href="css/print.css" rel="stylesheet" media="print">
     <link href="css/portrait.css" rel="stylesheet" media="only screen and only screen and (max-width: 480px)">
     <script>
@@ -108,9 +110,11 @@
       </footer>
     </div>
 
+    <!-- Scripts in the end of html -->
+    <!-- Async scripts that doesn't need to be loaded at first page load -->
     <script async src="http://www.google-analytics.com/analytics.js"></script>
     <script async src="js/perfmatters.js"></script>
   </body>
 </html>
-<!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
+<!-- Google fonts load after the html, not blocking the rendering -->
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">

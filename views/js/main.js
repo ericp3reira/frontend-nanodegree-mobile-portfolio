@@ -402,10 +402,13 @@ var pizzaElementGenerator = function(i) {
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
+  // newWidth switch and randomPizzaContainers document have to be called only
+  // when the slider moves, not when resizing pizzas
   var newWidth;
   var randomPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
 
   // Changes the slider value to a percent width
+  // sizeSwitcher changes the label and defines the newWidth at the same time
   function sizeSwitcher (size) {
     switch(size) {
       case "1":
@@ -427,6 +430,7 @@ var resizePizzas = function(size) {
 
   sizeSwitcher(size);
 
+  // Refactoring the for loop
   for (var i = 0; i < randomPizzaContainers.length; i++) {
     randomPizzaContainers[i].style.width = newWidth + "%";
   }
@@ -473,6 +477,8 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
+  // Stop the layout rendering by defining the scrollTop outside the
+  // for loop
   var scrollTop = document.body.scrollTop;
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {

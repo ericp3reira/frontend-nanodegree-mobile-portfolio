@@ -1,55 +1,44 @@
-## Website Performance Optimization portfolio project
+## Website Performance Optimization Portfolio Project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+The objective of [this project](https://github.com/udacity/frontend-nanodegree-mobile-portfolio) was to optimize the Critical Rendering Path and make it run at 60 fps.
 
-To get started, check out the repository and inspect the code.
+### How to Run
 
-### Getting started
+Download or clone the repository and run `index.html`.
+Or see it live [here](https://ericp3reira.github.io/udacity-optimized-portfolio/).
+
+### Changes made
 
 #### Part 1: Optimize PageSpeed Insights score for index.html
 
-Some useful tips to help you get started:
+- All code in style.css are in the head tag, excluding a request;
+- Media queries (print and portrait) are downloaded only if required;
+- Scripts are at the bottom of body;
+- Scripts that doesn't need to be loaded at first page load are asynchronous;
+- Images are resized and compacted;
+- Google fonts load after the html, not blocking the rendering.
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
-
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
-
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
-
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
-  ```
-
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
-
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+[PageSpeed](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fericp3reira.github.io%2Fudacity-optimized-portfolio%2F&tab=mobile):
+Mobile: 94/100,
+Desktop: 92/100
 
 #### Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+- `resizePizzas()` was causing layout thrashing by calling and changing the width of `.randomPizzaContainer` several times during the `for` loop. So the following steps were needed:
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+  - `changeSliderLabel()` was incorporated into `sizeSwitcher()`, using only one `switch` loop;
+  - `determineDx()` was unnecessary and deleted;
+  - `document.querySelectorAll(".randomPizzaContainer")` was transferred to a variable outside the `for` loop, being called only once;
+  - `newWidth` is defined with `sizeSwitcher()` and doesn't need calculations;
+  - `changePizzaSizes()` was unnecessary and deleted.
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+- `updatePositions` was also causing low fps. Defining `document.body.scrollTop` to a variable outside the `for` loop solved it.
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+
+#### Part 3: To-Do
+
+- Minify HTML, CSS and JS files;
+- Better image optimization;
+- Refactor CSS;
+- CSS pizza animation (maybe).
