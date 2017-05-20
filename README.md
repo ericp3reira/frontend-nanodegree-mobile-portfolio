@@ -35,6 +35,12 @@ Desktop: 92/100
 
 - `updatePositions` was also causing low fps. Defining `document.body.scrollTop` to a variable outside the `for` loop solved it.
 
+After the first submission, the Udacity reviewer gave me some tips and this is what I applied:
+
+- Changed all `querySelectorAll` and `querySelector` to `getElementsByClassName` and `getElementById` for about 30% better performance;
+- Defined `pizzasDiv` outside the `for` loop because it can be called just once;
+- The number pizzas moving is generated using the variable for screen resolution (`window.screen.height`) `screenHeight`.
+
 
 #### Part 3: To-Do
 

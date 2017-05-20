@@ -405,22 +405,24 @@ var resizePizzas = function(size) {
   // newWidth switch and randomPizzaContainers document have to be called only
   // when the slider moves, not when resizing pizzas
   var newWidth;
-  var randomPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
+  // Change querySelectorAll to getElementsByClassName
+  // Tip by Tomás when reviewed my project on Udacity :)
+  var randomPizzaContainers = document.getElementsByClassName("randomPizzaContainer");
 
   // Changes the slider value to a percent width
   // sizeSwitcher changes the label and defines the newWidth at the same time
   function sizeSwitcher (size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         newWidth = 25;
         break;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         newWidth = 33.3;
         break;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         newWidth = 50;
         break;
       default:
@@ -445,8 +447,8 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -480,7 +482,7 @@ function updatePositions() {
   // Stop the layout rendering by defining the scrollTop outside the
   // for loop
   var scrollTop = document.body.scrollTop;
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -500,10 +502,17 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
+// Tips by Tomás when reviewed my project on Udacity :)
 document.addEventListener('DOMContentLoaded', function() {
+  // Get the screen height resolution
+  var screenHeight = window.screen.height;
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // Calculate the number of rows by the screen height
+  var rows = screenHeight/s;
+  // Calculate how many pizzas will be needed
+  var pizzasNum = rows * cols;
+  for (var i = 0; i < pizzasNum; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -511,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
